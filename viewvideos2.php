@@ -16,12 +16,17 @@ $userlname = $_SESSION[ "lname" ];
   
   <main id="main">
 
+<<<<<<< HEAD
     <!-- ======= Breadcrumbs Section ======= -->
     <section class="breadcrumbs">
       <div class="container">
 
         <div class="d-flex justify-content-between align-items-center">
         <h1> Welcome <a href="welcomestudent.php" <?php echo "<span style='color:red'>".				
+=======
+		<div class="col-md-12">
+			<h1> Welcome <a href="welcomestudent.php" <?php echo "<span style='color:red'>".				
+>>>>>>> 43d6eae9091fb02a14cefe91b823c2730994fa59
 			$userfname." ".$userlname."</span>";?> </a></h1>
 			
         </div>
@@ -42,10 +47,29 @@ $userlname = $_SESSION[ "lname" ];
 			while($row=mysqli_fetch_array($rs))
 				{
 				?>
+<<<<<<< HEAD
 					
 							<h2>Subject -> <?PHP echo $row['V_Title'];?></h2>
 						
 						<br>
+=======
+					<tr>
+						<td>
+							<h2>Subject: <?PHP echo $row['V_Title'];?></h2>
+						</td>
+						<br>
+						<br>
+						<td>
+							<h2> Description: <?PHP echo $row['V_Remarks'];?> </h2>
+						</td>
+						<br>
+						<td>
+				
+						<a href="<?php echo $row['V_Url']; ?>"><input type=	"button" Value="Join The Class"  class="btn btn-info" style="border-radius:0%"  data-toggle="modal" data-target="#myModal"></a>
+						</td>
+                        <br>				
+						<br>						
+>>>>>>> 43d6eae9091fb02a14cefe91b823c2730994fa59
 						<br>
 						
 							<h2> Description -><?PHP echo $row['V_Remarks'];?> </h2>
@@ -88,4 +112,10 @@ $userlname = $_SESSION[ "lname" ];
 
 </body>
 
+<<<<<<< HEAD
 </html>
+=======
+		
+	</div>
+	<?php include('allfoot.php');  ?>
+>>>>>>> 43d6eae9091fb02a14cefe91b823c2730994fa59

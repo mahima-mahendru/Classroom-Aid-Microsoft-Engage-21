@@ -64,25 +64,31 @@ $userid = $_SESSION["umail"];
 				//below SQL query will update the existing faculty 
 				$sql="UPDATE `facutlytable` SET FName='$tempfname',FaName='$tempfaname',Addrs='$tempaddrs', Gender='$tempgender', City='$tempcity',Pass='$temppass', PhNo=$tempphno WHERE FID=$new2"; 
 				
-				if (mysqli_query($connect, $sql)) {
-					echo "<br>
+				$query_run=mysqli_query($connect, $sql);
 
-					<br><br>
-					<div class='alert alert-success fade in'>
-					<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-					<strong>Success!</strong> Faculty Details updated has been deleted.
-					</div>";
-					} else {
-					// below statement will print error
-					echo "<br><Strong>Faculty Details Updating Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error($connect);
-					}
+				//alert message
+                if($query_run)
+				{
+					$_SESSION['status']="Updated Successfully!";
+					$_SESSION['status_code']="success";
+					
+				}
+				else
+				{
+					$_SESSION['status']="Updated Unsuccessful!";
+					$_SESSION['status_code']="error";
+			
+
+				}
+						
 				//for close connection
 					mysqli_close($connect);
-						} 
+
+			} 
 				?>
             </div>
 			
 
 			<div class="col-md-3"></div>
 	</div>
-<?php include('allfoot.php'); ?>
+	<?php include('alert.php'); ?>

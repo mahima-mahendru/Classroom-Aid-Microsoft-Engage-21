@@ -32,17 +32,22 @@ $userid = $_SESSION[ "umail" ];
 			$deleteid = $_GET[ 'deleteid' ];
 			//below will delete a particular student
 			$sql = "DELETE FROM `studenttable` WHERE Eno = $deleteid";
-			if ( mysqli_query( $connect, $sql ) ) {
-				echo "
-				<br><br>
-				<div class='alert alert-success fade in'>
-				<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-				<strong>Success!</strong> Student details deleted.
-				</div>
-				";
-			} else {
-				echo "<br><Strong>Student Updation Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error( $connect );
+			$query_run= mysqli_query( $connect, $sql );
+			if($query_run)
+			{
+				$_SESSION['status']="Student Deleted Successfully!";
+				$_SESSION['status_code']="success";
+				
 			}
+			else
+			{
+				$_SESSION['status']="Deletion Unsuccessfull!";
+				$_SESSION['status_code']="error";
+		   
+
+			}
+		   
+			//close the connection
 		}
 		mysqli_close( $connect );
 		?>
@@ -109,7 +114,7 @@ $userid = $_SESSION[ "umail" ];
 				</td>
 				
 				<td><a href="updatestudent.php?eno=<?php echo $row['Eno']; ?>"><input type="button" Value="Edit" class="btn btn-success btn-sm" style="border-radius:0%"></a>
-				<a href="studentdetails.php?deleteid=<?php echo $row['Eno']; ?>"><input type="submit" Value="Delete" name="delete" class="btn btn-danger btn-sm" style="border-radius:0%"></a>
+				<a href="studentdetails.php?deleteid=<?php echo $row['Eno']; ?>"><input type="button" Value="Delete" name="delete" class="btn btn-danger btn-sm" style="border-radius:0%"></a>
 				</td>
 			</tr>
 			<?php $count++; } ?>
@@ -140,6 +145,7 @@ $userid = $_SESSION[ "umail" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <?php include('alert.php'); ?>
 
 </body>
 

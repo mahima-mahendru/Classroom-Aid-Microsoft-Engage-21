@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php include('before-login.php'); ?>
+session_start();
 <script>
 	//javascript validation for various fildss
 	function validateForm() {
@@ -59,10 +60,9 @@
 	}
 </script>
 
-
+<!-- ===========body section ========= ---->
 
 <body>
-
   
   <main id="main">
 
@@ -94,24 +94,25 @@
 			$gender = $_POST[ 'gender' ];
 			$phno = $_POST[ 'phno' ];
 			$email = $_POST[ 'email' ];
-			$pass = $_POST[ 'pass' ];
-
-			$done = "
-			<center>
-			<div class='alert alert-success fade in __web-inspector-hide-shortcut__'' style='margin-top:10px;'>
-			<a href='#' class='close' data-dismiss='alert' aria-label='close' title='close'>&times;</a>
-			<strong><h3 style='margin-top: 10px;
-			margin-bottom: 10px;'> Register Successfully Complete. Now You Can Login With Your Email & Password</h3>
-			</strong>
-			</div>
-			</center>
-			";
+			$pass = $_POST[ 'pass' ];		
 
 			$sql = "INSERT INTO `studenttable` (`FName`, `LName`, `FaName`, `DOB`, `Addrs`, `Gender`, `PhNo`, `Eid`, `Pass`,`Course`) VALUES ('$fname','$lname','$faname','$dob','$addrs','$gender','$phno','$email','$pass','$course')";
 			//close the connection
-			mysqli_query( $connect, $sql );
+			$query_run=mysqli_query( $connect, $sql );
+             if($query_run)
+			 {
+				 $_SESSION['status']="Registration Complete!";
+				 $_SESSION['status_code']="success";
+				 
+			 }
+			 else
+			 {
+				 $_SESSION['status']="Registration Incomplete!";
+				 $_SESSION['status_code']="error";
+			
 
-			echo $done;
+			 }		
+			
 		}
 
 		?>
@@ -240,10 +241,13 @@
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="js/sweetalert.min.js"></script>
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <?php include('alert.php'); ?>
 
+  
 </body>
 
 </html>

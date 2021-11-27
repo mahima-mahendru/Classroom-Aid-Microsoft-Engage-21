@@ -82,15 +82,14 @@ $fname = $_SESSION[ "fname" ];
 							<textarea name="V_Remarks" rows="2" cols="150" class="form-control"><?php $V_Remarks=$row['V_Remarks']; echo $V_Remarks; ?></textarea>
 							</td>
 						</tr>							
-						<td><button type="submit" name="update" class="btn btn-success" style="border-radius:0%">Update</button>
-			             </td>
+						
 						<?php
 						}
 						?>
 						<?php 
 
-							if(isset($_POST['update']))
-							{
+						if(isset($_POST['update']))
+						{
 							
 							$V_Title= $_POST['V_Title'];
 							$V_Time= $_POST['V_Time'];
@@ -98,28 +97,33 @@ $fname = $_SESSION[ "fname" ];
 							$V_Remarks= $_POST['V_Remarks'];
 							
 							$sql = "UPDATE `video` SET V_Title='$V_Title' ,V_Time='$V_Time', V_Url='$V_Url' , V_Remarks='$V_Remarks' WHERE V_id=$make";
-
-							if (mysqli_query($connect, $sql)) {
-								echo "
-								<br><br>
-								<div class='alert alert-success fade in'>
-								<a href='manageassessment.php' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-								<strong>Success!</strong> Videos Updated.
-								</div>
-								";
-								} else {
-								//error message if SQL query fails
-								echo "<br><Strong>Video Updation Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error($connect);
-
-								//close the connection
-								mysqli_close($connect);
-								}
+                            $query_run=mysqli_query( $connect, $sql );
+							//alert message
+							if($query_run)
+							{
+								$_SESSION['status']="Class Information Updated!";
+								$_SESSION['status_code']="success";
+								
 							}
+							else
+							{
+								$_SESSION['status']="Unsuccessful!";
+								$_SESSION['status_code']="error";						
+
+							}
+							
+							//close the connection
+							mysqli_close( $connect );
+									
+							
+						}
 							?> 
 					</table>
+					 <button type="submit" name="update" class="btn btn-success" style="border-radius:0%">Update</button>
+					<a href="managevideos.php"> <input type="button" Value="Back"  class="btn btn-success" style="border-radius:0%;width:80px"></a>
+					    
 				</form>
 			</fieldset>
-			<a href="managevideos.php"> <input type="button" Value="Back"  class="btn btn-success" style="border-radius:0%;width:80px"></a>
 						
       </div>
     </section>
@@ -145,6 +149,7 @@ $fname = $_SESSION[ "fname" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <?php include('alert.php'); ?>
 
 </body>
 

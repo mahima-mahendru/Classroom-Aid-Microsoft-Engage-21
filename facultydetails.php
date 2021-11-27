@@ -28,18 +28,22 @@ $userid = $_SESSION[ "umail" ];
 			//delete faculty Query
 			$sql = "DELETE FROM `facutlytable` WHERE FID = $deleteid";
 
-			if ( mysqli_query( $connect, $sql ) ) {
-				echo "
-
-					<br><br>
-					<div class='alert alert-success fade in'>
-					<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-					<strong>Success!</strong> Faculty Details has been deleted.
-					</div>";
-			} else {
-				//error message if SQL query fails
-				echo "<br><Strong>Faculty Details Updation Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error( $connect );
+			$query_run=mysqli_query( $connect, $sql );
+			//alert message
+			if($query_run)
+			{
+				$_SESSION['status']="Deleted Successfully!";
+				$_SESSION['status_code']="success";
+				
 			}
+			else
+			{
+				$_SESSION['status']="Unsuccessful!";
+				$_SESSION['status_code']="error";
+		
+
+			}
+			
 			//close the connection
 			mysqli_close( $connect );
 		}
@@ -136,7 +140,7 @@ $userid = $_SESSION[ "umail" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <?php include('alert.php'); ?>
 </body>
 
 </html>

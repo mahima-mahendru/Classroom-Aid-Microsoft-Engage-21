@@ -98,20 +98,21 @@ $userid = $_SESSION[ "umail" ];
 				$sql = "UPDATE `studenttable` SET FName='$tempfname', LName='$templname', FaName='$tempfaname', Gender='$tempgender', Course='$tempcourse', Addrs='$tempaddrs', PhNo=$tempphno, Eid='$tempeid', Pass='$temppass'  WHERE Eno=$new3";
 
 
-				if ( mysqli_query( $connect, $sql ) ) {
-					echo "
-
-					<br><br>
-					<div class='alert alert-success fade in'>
-					<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-					<strong>Success!</strong> Student Details has been updated.
-					</div>
-
-					";
-				} else {
-					//below statement will print error if SQL query fail.
-					echo "<br><Strong>Student Updation Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error( $connect );
+				$query_run=mysqli_query( $connect, $sql );
+				if($query_run)
+				{
+					$_SESSION['status']="Student Details Updated!";
+					$_SESSION['status_code']="success";
+					
 				}
+				else
+				{
+					$_SESSION['status']="Student Details Not Updated!";
+					$_SESSION['status_code']="error";
+			   
+   
+				}
+			   
 				//for close connection
 				mysqli_close( $connect );
 
@@ -141,7 +142,6 @@ $userid = $_SESSION[ "umail" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <?php include('alert.php'); ?>
 </body>
-
 </html>

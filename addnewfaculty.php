@@ -98,17 +98,19 @@ $userid = $_SESSION[ "umail" ];
 				// adding new faculty
 				$sql = "insert facutlytable (FName, FaName, Addrs, Gender, JDate, City, Pass, PhNo) values ('$tempfname', '$tempfaname', '$tempaddrs','$tempgender', '$tempjdate', '$tempcity' , '$temppass','$tempphno')";
 
-				if ( mysqli_query( $connect, $sql ) ) {
+				$query_run= mysqli_query( $connect, $sql );
+				if($query_run)
+			    {
+					$_SESSION['status']="Faculty Added Successfully!";
+					$_SESSION['status_code']="success";
+					
+			     }
+				else
+				{
+					$_SESSION['status']="Not Added!";
+					$_SESSION['status_code']="error";
+			
 
-					echo "<br>
-					<br><br>
-					<div class='alert alert-success fade in'>
-					<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-					<strong>Success!</strong> New Faculty Addded Faculty ID is : <strong>" . mysqli_insert_id( $connect ) . "</strong></div>";
-
-				} else {
-					//error message if SQL query Fails
-					echo "<br><Strong>New Faculty Adding Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error( $connect );
 				}
 				//close the connection
 				mysqli_close( $connect );
@@ -144,6 +146,7 @@ $userid = $_SESSION[ "umail" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <?php include('alert.php'); ?>
 
 </body>
 

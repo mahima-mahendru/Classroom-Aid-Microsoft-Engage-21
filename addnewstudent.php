@@ -40,14 +40,22 @@ $userid = $_SESSION[ "umail" ];
 			$temppass = $_POST[ 'pass' ];
 			//adding new student into database SQL Query
 			$sql = "Insert into studenttable (FName, LName, FaName, DOB, Addrs, Gender, Course, PhNo , Eid, Pass) values ('$tempfname', '$templname', '$tempfaname', '$tempdob', '$tempaddrs' , '$tempgender', '$tempcourse' , $tempphno, '$tempeid' , '$temppass')";
-			if ( mysqli_query( $connect, $sql ) ) {
-				echo "<center><div class='alert alert-success fade in __web-inspector-hide-shortcut__'' style='margin-top:10px;'><a href='#' class='close' data-dismiss='alert' aria-label='close' title='close'>&times;</a>
-				<h3 style='margin-top: 10px; margin-bottom: 10px;'>Admission Confirm.! Enrolment Number is : <span style='color:black'><strong>" . mysqli_insert_id( $connect ) . "</strong></span></h4></div></center>
-				";
-			} else {
-				//error message if SQL query fails
-				echo "<br><Strong>Admission Faliure. Try Again</strong><br> Error Details: " . $sql . "<br>" . mysqli_error( $connect );
+			$query_run=mysqli_query( $connect, $sql );
+			//alert message
+			if($query_run)
+			{
+				$_SESSION['status']="Registration Complete!";
+				$_SESSION['status_code']="success";
+				
 			}
+			else
+			{
+				$_SESSION['status']="Registration Incomplete!";
+				$_SESSION['status_code']="error";
+		   
+
+			}
+		   
 			//close the connection
 			mysqli_close( $connect );
 		}
@@ -141,6 +149,7 @@ $userid = $_SESSION[ "umail" ];
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <?php include('alert.php'); ?>
 
 </body>
 
